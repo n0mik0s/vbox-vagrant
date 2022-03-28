@@ -39,6 +39,13 @@ cluster = {
     :distro => "generic/fedora35",
     :bridgeadapter1 => "wlp0s20f3"
   },
+  "worker3" => {
+    :ip => "192.168.172.86",
+    :cpus => 3,
+    :mem => 5120,
+    :distro => "generic/fedora35",
+    :bridgeadapter1 => "wlp0s20f3"
+  },
   "vault" => {
     :ip => "192.168.172.85",
     :cpus => 2,
