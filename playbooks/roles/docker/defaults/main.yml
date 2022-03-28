@@ -1,0 +1,4 @@
+---
+docker_repo_url: "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+docker_gpgkey_url: https://download.docker.com/linux/ubuntu/gpg
+docker_gpgkey_file: /tmp/docker.gpg

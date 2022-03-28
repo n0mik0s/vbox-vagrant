@@ -1,0 +1,25 @@
+---
+- name: Install a list of packages. RHEL Family OS
+  yum:
+    name:
+    - freeipa-client
+    - mc
+    - htop
+    state: present
+    update_cache: yes
+  when: ansible_os_family == "RedHat"
+  become: true
+  become_method: sudo
+  become_user: root
+
+- name: Install a list of packages. Debian
+  apt:
+    pkg:
+    - freeipa-client
+    - resolvconf
+    - mc
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+  become: true
+  become_method: sudo
+  become_user: root

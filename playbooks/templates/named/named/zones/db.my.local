@@ -1,0 +1,17 @@
+$TTL 86400
+@	IN	SOA	freeipa.my.local. admin.my.local. (
+				4			; Serial
+				604800		; Refresh
+				86400		; Retry
+				2419200		; Expire
+				604800 )	; Negative Cache TTL
+
+;
+; name servers - NS records
+	IN	NS	freeipa.my.local.
+
+; name servers - A records
+freeipa.my.local.	IN	A	192.168.207.80
+
+; 192.168.207/24 - A records
+rancher.my.local.	IN	A	192.168.207.81

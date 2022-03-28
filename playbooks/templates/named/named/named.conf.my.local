@@ -1,0 +1,9 @@
+zone "my.local" {
+    type master;
+    file "/etc/named/zones/db.my.local";
+};
+
+zone "207.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/named/zones/db.207.168.192";
+};

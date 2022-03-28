@@ -1,0 +1,22 @@
+---
+- name: talk to all hosts just so we can learn about them
+  hosts: all
+  tasks:
+    - name: Classify hosts depending on their OS distribution
+      group_by:
+        key: ansible_facts['distribution']
+
+- name: Upgrade and Reboot
+  hosts: gupdates
+  roles:
+    - update
+
+- name: Install Docker
+  hosts: grancher:gk8s
+  roles:
+    - docker
+
+- name: Install all needed packages
+  hosts: ginfra
+  roles:
+    - install

@@ -1,0 +1,37 @@
+---
+- name: download the Docker apt key
+  when: ansible_os_family == "Debian" and "'controlplane' in group_names" and "'workers' in group_names"
+  get_url:
+    url: "{{ docker_gpgkey_url }}"
+    dest: "{{ docker_gpgkey_file }}"
+
+- name: Add Apt Docker signing key on remote server to keyring
+  apt_key:
+    file: "{{ docker_gpgkey_file }}"
+    state: present
+  when: ansible_os_family == "Debian" and "'controlplane' in group_names" and "'workers' in group_names"
+  become: true
+  become_method: sudo
+  become_user: root
+
+- name: Add Docker repository
+  become: true
+  become_method: sudo
+  become_user: root
+  when: ansible_os_family == "Debian" and "'controlplane' in group_names" and "'workers' in group_names"
+  apt_repository:
+    state: present
+    filename: docker
+    repo: "{{ docker_repo_url }}"
+
+- name: Install a list of packages for Docker
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+  become: true
+  become_method: sudo
+  become_user: root
+  when: ansible_os_family == "Debian" and "'controlplane' in group_names" and "'workers' in group_names"

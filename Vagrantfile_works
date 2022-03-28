@@ -1,0 +1,53 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+cluster = {
+  "worker1" => { :ip => "192.168.1.101", :cpus => 2, :mem => 4096, :distro => "generic/ubuntu2004" },
+  "worker2" => { :ip => "192.168.1.102", :cpus => 2, :mem => 4096, :distro => "generic/ubuntu2004" },
+  "master" => { :ip => "192.168.1.100", :cpus => 2, :mem => 2048, :distro => "generic/ubuntu2004" },
+  "gitlab" => { :ip => "192.168.1.103", :cpus => 2, :mem => 4096, :distro => "generic/ubuntu2004" },
+  "freeipa" => { :ip => "192.168.1.104", :cpus => 2, :mem => 4096, :distro => "generic/fedora35" },
+  "rancher" => { :ip => "192.168.1.99", :cpus => 2, :mem => 4096, :distro => "generic/ubuntu2004" }
+}
+ 
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  total_hosts = cluster.length
+  
+  cluster.each_with_index do |(hostname, info), index|
+
+    config.vm.define hostname do |cfg|
+      cfg.vm.provider :virtualbox do |vb, override|
+        config.vm.box = info[:distro]
+        config.vm.box_check_update = "false"
+        override.vm.network :private_network, ip: "#{info[:ip]}", hostname: true
+        override.vm.hostname = hostname
+        vb.name = hostname
+        vb.customize ["modifyvm", :id, "--memory", info[:mem], "--cpus", info[:cpus], "--hwvirtex", "on"]
+
+        if index == total_hosts - 1
+          cfg.vm.network "forwarded_port", guest: 443, host: 8443, protocol: "tcp",
+          auto_correct: true
+        end
+
+      end
+
+      if index == total_hosts - 1
+        cfg.vm.provision "ansible" do |ansible|
+          ansible.limit = "all"
+          ansible.playbook = "provisioning_k8s/playbook.yml"
+          ansible.groups = {
+            "controlplane" => ["master", "rancher"],
+            "workers" => ["worker[1:2]"],
+            "gitlab" => ["gitlab"],
+            "freeipa" => ["freeipa"]
+          }
+        end
+      end
+
+    end
+
+  end
+
+end

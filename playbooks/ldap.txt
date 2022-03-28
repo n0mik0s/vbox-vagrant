@@ -1,0 +1,1128 @@
+[root@freeipa vagrant]# ldapsearch -x -b "dc=my,dc=local" -H ldap://127.0.0.1
+# extended LDIF
+#
+# LDAPv3
+# base <dc=my,dc=local> with scope subtree
+# filter: (objectclass=*)
+# requesting: ALL
+#
+
+# users, compat, my.local
+dn: cn=users,cn=compat,dc=my,dc=local
+objectClass: extensibleObject
+cn: users
+
+# rancher-admin, users, compat, my.local
+dn: uid=rancher-admin,cn=users,cn=compat,dc=my,dc=local
+objectClass: posixAccount
+objectClass: ipaOverrideTarget
+objectClass: top
+gecos: Admin Rancher
+cn: Admin Rancher
+uidNumber: 477600008
+gidNumber: 477600005
+loginShell: /bin/sh
+homeDirectory: /home/rancher-admin
+ipaAnchorUUID:: OklQQTpteS5sb2NhbDo4ODZkNWQ5NC1hYWU4LTExZWMtYmI0ZS0wODAwMjc3YW
+ RiZWM=
+uid: rancher-admin
+
+# rancher-user, users, compat, my.local
+dn: uid=rancher-user,cn=users,cn=compat,dc=my,dc=local
+objectClass: posixAccount
+objectClass: ipaOverrideTarget
+objectClass: top
+gecos: User Rancher
+cn: User Rancher
+uidNumber: 477600007
+gidNumber: 477600006
+loginShell: /bin/sh
+homeDirectory: /home/rancher-user
+ipaAnchorUUID:: OklQQTpteS5sb2NhbDo3NjU0NGJhNC1hYWU4LTExZWMtODMyMS0wODAwMjc3YW
+ RiZWM=
+uid: rancher-user
+
+# sa-rancher, users, compat, my.local
+dn: uid=sa-rancher,cn=users,cn=compat,dc=my,dc=local
+objectClass: posixAccount
+objectClass: ipaOverrideTarget
+objectClass: top
+gecos: Rancher Service Account
+cn: Rancher Service Account
+uidNumber: 477600003
+gidNumber: 477600003
+loginShell: /bin/sh
+homeDirectory: /home/sa-rancher
+ipaAnchorUUID:: OklQQTpteS5sb2NhbDpmZWZmMzU5Mi1hOTQyLTExZWMtOWI3MS0wODAwMjc3YW
+ RiZWM=
+uid: sa-rancher
+
+# admin, users, compat, my.local
+dn: uid=admin,cn=users,cn=compat,dc=my,dc=local
+objectClass: posixAccount
+objectClass: ipaOverrideTarget
+objectClass: top
+gecos: Administrator
+cn: Administrator
+uidNumber: 477600000
+gidNumber: 477600000
+loginShell: /bin/bash
+homeDirectory: /home/admin
+ipaAnchorUUID:: OklQQTpteS5sb2NhbDoxNzk3YTA0OC1hOTMwLTExZWMtOGJhOC0wODAwMjc3YW
+ RiZWM=
+uid: admin
+
+# ng, compat, my.local
+dn: cn=ng,cn=compat,dc=my,dc=local
+objectClass: extensibleObject
+cn: ng
+
+# groups, compat, my.local
+dn: cn=groups,cn=compat,dc=my,dc=local
+objectClass: extensibleObject
+cn: groups
+
+# rancher-users, groups, compat, my.local
+dn: cn=rancher-users,cn=groups,cn=compat,dc=my,dc=local
+objectClass: posixGroup
+objectClass: ipaOverrideTarget
+objectClass: ipaexternalgroup
+objectClass: top
+gidNumber: 477600006
+memberUid: sa-rancher
+memberUid: rancher-user
+ipaAnchorUUID:: OklQQTpteS5sb2NhbDoyODAzMzY3ZS1hYWNkLTExZWMtODhiYi0wODAwMjc3YW
+ RiZWM=
+cn: rancher-users
+
+# rancher-admins, groups, compat, my.local
+dn: cn=rancher-admins,cn=groups,cn=compat,dc=my,dc=local
+objectClass: posixGroup
+objectClass: ipaOverrideTarget
+objectClass: ipaexternalgroup
+objectClass: top
+gidNumber: 477600005
+memberUid: admin
+memberUid: rancher-admin
+ipaAnchorUUID:: OklQQTpteS5sb2NhbDoyMjM3ZDFkYy1hYWNkLTExZWMtOWFiMy0wODAwMjc3YW
+ RiZWM=
+cn: rancher-admins
+
+# rancher-admin, groups, compat, my.local
+dn: cn=rancher-admin,cn=groups,cn=compat,dc=my,dc=local
+objectClass: posixGroup
+objectClass: ipaOverrideTarget
+objectClass: ipaexternalgroup
+objectClass: top
+gidNumber: 477600008
+ipaAnchorUUID:: OklQQTpteS5sb2NhbDo4ODZmOGMxOC1hYWU4LTExZWMtYmI0ZS0wODAwMjc3YW
+ RiZWM=
+cn: rancher-admin
+
+# rancher-user, groups, compat, my.local
+dn: cn=rancher-user,cn=groups,cn=compat,dc=my,dc=local
+objectClass: posixGroup
+objectClass: ipaOverrideTarget
+objectClass: ipaexternalgroup
+objectClass: top
+gidNumber: 477600007
+ipaAnchorUUID:: OklQQTpteS5sb2NhbDo3NjU2OTBiYy1hYWU4LTExZWMtODMyMS0wODAwMjc3YW
+ RiZWM=
+cn: rancher-user
+
+# rancher, groups, compat, my.local
+dn: cn=rancher,cn=groups,cn=compat,dc=my,dc=local
+objectClass: posixGroup
+objectClass: ipaOverrideTarget
+objectClass: ipaexternalgroup
+objectClass: top
+gidNumber: 477600004
+memberUid: sa-rancher
+ipaAnchorUUID:: OklQQTpteS5sb2NhbDowYzY0YTMzNC1hOTQzLTExZWMtOGZkMy0wODAwMjc3YW
+ RiZWM=
+cn: rancher
+
+# sa-rancher, groups, compat, my.local
+dn: cn=sa-rancher,cn=groups,cn=compat,dc=my,dc=local
+objectClass: posixGroup
+objectClass: ipaOverrideTarget
+objectClass: ipaexternalgroup
+objectClass: top
+gidNumber: 477600003
+ipaAnchorUUID:: OklQQTpteS5sb2NhbDpmZjAzZWI1YS1hOTQyLTExZWMtOWI3MS0wODAwMjc3YW
+ RiZWM=
+cn: sa-rancher
+
+# Default SMB Group, groups, compat, my.local
+dn: cn=Default\20SMB\20Group,cn=groups,cn=compat,dc=my,dc=local
+objectClass: posixGroup
+objectClass: ipaOverrideTarget
+objectClass: ipaexternalgroup
+objectClass: top
+gidNumber: 477600001
+ipaAnchorUUID:: OklQQTpteS5sb2NhbDpiOGZkNWRjNC1hOTMwLTExZWMtOWJkMi0wODAwMjc3YW
+ RiZWM=
+cn: Default SMB Group
+
+# editors, groups, compat, my.local
+dn: cn=editors,cn=groups,cn=compat,dc=my,dc=local
+objectClass: posixGroup
+objectClass: ipaOverrideTarget
+objectClass: ipaexternalgroup
+objectClass: top
+gidNumber: 477600002
+ipaAnchorUUID:: OklQQTpteS5sb2NhbDoxNzlhYmRkYy1hOTMwLTExZWMtYWJkNi0wODAwMjc3YW
+ RiZWM=
+cn: editors
+
+# admins, groups, compat, my.local
+dn: cn=admins,cn=groups,cn=compat,dc=my,dc=local
+objectClass: posixGroup
+objectClass: ipaOverrideTarget
+objectClass: ipaexternalgroup
+objectClass: top
+gidNumber: 477600000
+memberUid: admin
+ipaAnchorUUID:: OklQQTpteS5sb2NhbDoxNzk5NzIzOC1hOTMwLTExZWMtYjc4Ni0wODAwMjc3YW
+ RiZWM=
+cn: admins
+
+# computers, compat, my.local
+dn: cn=computers,cn=compat,dc=my,dc=local
+objectClass: extensibleObject
+cn: computers
+
+# sudoers, my.local
+dn: ou=sudoers,dc=my,dc=local
+objectClass: extensibleObject
+ou: sudoers
+
+# my.local
+dn: dc=my,dc=local
+objectClass: top
+objectClass: domain
+objectClass: pilotObject
+objectClass: domainRelatedObject
+objectClass: nisDomainObject
+dc: my
+info: IPA V2.0
+associatedDomain: my.local
+nisDomain: my.local
+
+# accounts, my.local
+dn: cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: accounts
+
+# users, accounts, my.local
+dn: cn=users,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: users
+
+# groups, accounts, my.local
+dn: cn=groups,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: groups
+
+# services, accounts, my.local
+dn: cn=services,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: services
+
+# computers, accounts, my.local
+dn: cn=computers,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: computers
+
+# hostgroups, accounts, my.local
+dn: cn=hostgroups,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: hostgroups
+
+# ipservices, accounts, my.local
+dn: cn=ipservices,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: ipservices
+
+# alt, my.local
+dn: cn=alt,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: alt
+
+# ng, alt, my.local
+dn: cn=ng,cn=alt,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: ng
+
+# automount, my.local
+dn: cn=automount,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: automount
+
+# default, automount, my.local
+dn: cn=default,cn=automount,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: default
+
+# auto.master, default, automount, my.local
+dn: automountmapname=auto.master,cn=default,cn=automount,dc=my,dc=local
+objectClass: automountMap
+objectClass: top
+automountMapName: auto.master
+
+# auto.direct, default, automount, my.local
+dn: automountmapname=auto.direct,cn=default,cn=automount,dc=my,dc=local
+objectClass: automountMap
+objectClass: top
+automountMapName: auto.direct
+
+# /- auto.direct, auto.master, default, automount, my.local
+dn: description=/- auto.direct,automountmapname=auto.master,cn=default,cn=auto
+ mount,dc=my,dc=local
+objectClass: automount
+objectClass: top
+automountKey: /-
+automountInformation: auto.direct
+description: /- auto.direct
+
+# hbac, my.local
+dn: cn=hbac,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: hbac
+
+# hbacservices, hbac, my.local
+dn: cn=hbacservices,cn=hbac,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: hbacservices
+
+# hbacservicegroups, hbac, my.local
+dn: cn=hbacservicegroups,cn=hbac,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: hbacservicegroups
+
+# sudo, my.local
+dn: cn=sudo,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: sudo
+
+# sudocmds, sudo, my.local
+dn: cn=sudocmds,cn=sudo,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: sudocmds
+
+# sudocmdgroups, sudo, my.local
+dn: cn=sudocmdgroups,cn=sudo,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: sudocmdgroups
+
+# sudorules, sudo, my.local
+dn: cn=sudorules,cn=sudo,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: sudorules
+
+# etc, my.local
+dn: cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: etc
+
+# locations, etc, my.local
+dn: cn=locations,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: locations
+
+# sysaccounts, etc, my.local
+dn: cn=sysaccounts,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: sysaccounts
+
+# ipa, etc, my.local
+dn: cn=ipa,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: ipa
+
+# replicas, ipa, etc, my.local
+dn: cn=replicas,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: replicas
+
+# dna, ipa, etc, my.local
+dn: cn=dna,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: dna
+
+# posix-ids, dna, ipa, etc, my.local
+dn: cn=posix-ids,cn=dna,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: posix-ids
+
+# subordinate-ids, dna, ipa, etc, my.local
+dn: cn=subordinate-ids,cn=dna,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: subordinate-ids
+
+# ca_renewal, ipa, etc, my.local
+dn: cn=ca_renewal,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: ca_renewal
+
+# certificates, ipa, etc, my.local
+dn: cn=certificates,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: certificates
+
+# custodia, ipa, etc, my.local
+dn: cn=custodia,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: custodia
+
+# dogtag, custodia, ipa, etc, my.local
+dn: cn=dogtag,cn=custodia,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: dogtag
+
+# s4u2proxy, etc, my.local
+dn: cn=s4u2proxy,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: s4u2proxy
+
+# admin, users, accounts, my.local
+dn: uid=admin,cn=users,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: person
+objectClass: posixaccount
+objectClass: krbprincipalaux
+objectClass: krbticketpolicyaux
+objectClass: inetuser
+objectClass: ipaobject
+objectClass: ipasshuser
+objectClass: ipaSshGroupOfPubKeys
+objectClass: ipaNTUserAttrs
+uid: admin
+cn: Administrator
+sn: Administrator
+uidNumber: 477600000
+gidNumber: 477600000
+homeDirectory: /home/admin
+loginShell: /bin/bash
+gecos: Administrator
+ipaNTSecurityIdentifier: S-1-5-21-2904903570-3206073076-3256804436-500
+
+# admins, groups, accounts, my.local
+dn: cn=admins,cn=groups,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: groupofnames
+objectClass: posixgroup
+objectClass: ipausergroup
+objectClass: ipaobject
+objectClass: nestedGroup
+objectClass: ipaNTGroupAttrs
+cn: admins
+description: Account administrators group
+gidNumber: 477600000
+ipaUniqueID: 17997238-a930-11ec-b786-0800277adbec
+ipaNTSecurityIdentifier: S-1-5-21-2904903570-3206073076-3256804436-512
+
+# ipausers, groups, accounts, my.local
+dn: cn=ipausers,cn=groups,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: groupofnames
+objectClass: nestedgroup
+objectClass: ipausergroup
+objectClass: ipaobject
+description: Default group for all users
+cn: ipausers
+ipaUniqueID: 179a958c-a930-11ec-b43d-0800277adbec
+
+# editors, groups, accounts, my.local
+dn: cn=editors,cn=groups,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: groupofnames
+objectClass: posixgroup
+objectClass: ipausergroup
+objectClass: ipaobject
+objectClass: nestedGroup
+objectClass: ipantgroupattrs
+gidNumber: 477600002
+description: Limited admins who can edit other users
+cn: editors
+ipaUniqueID: 179abddc-a930-11ec-abd6-0800277adbec
+ipaNTSecurityIdentifier: S-1-5-21-2904903570-3206073076-3256804436-1002
+
+# ipaConfig, etc, my.local
+dn: cn=ipaConfig,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+objectClass: ipaGuiConfig
+objectClass: ipaConfigObject
+objectClass: ipaUserAuthTypeClass
+objectClass: ipaNameResolutionData
+cn: ipaConfig
+
+# cosTemplates, accounts, my.local
+dn: cn=cosTemplates,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: cosTemplates
+
+# selinux, my.local
+dn: cn=selinux,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: selinux
+
+# usermap, selinux, my.local
+dn: cn=usermap,cn=selinux,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: usermap
+
+# ranges, etc, my.local
+dn: cn=ranges,cn=etc,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: ranges
+
+# ca, my.local
+dn: cn=ca,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: ca
+
+# certprofiles, ca, my.local
+dn: cn=certprofiles,cn=ca,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: certprofiles
+
+# caacls, ca, my.local
+dn: cn=caacls,cn=ca,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: caacls
+
+# cas, ca, my.local
+dn: cn=cas,cn=ca,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: cas
+
+# roles, accounts, my.local
+dn: cn=roles,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: roles
+
+# pbac, my.local
+dn: cn=pbac,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: pbac
+
+# privileges, pbac, my.local
+dn: cn=privileges,cn=pbac,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: privileges
+
+# permissions, pbac, my.local
+dn: cn=permissions,cn=pbac,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: permissions
+
+# virtual operations, etc, my.local
+dn: cn=virtual operations,cn=etc,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: virtual operations
+
+# Managed Entries, etc, my.local
+dn: cn=Managed Entries,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: Managed Entries
+
+# Templates, Managed Entries, etc, my.local
+dn: cn=Templates,cn=Managed Entries,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: Templates
+
+# Definitions, Managed Entries, etc, my.local
+dn: cn=Definitions,cn=Managed Entries,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: Definitions
+
+# automember, etc, my.local
+dn: cn=automember,cn=etc,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: automember
+
+# topology, ipa, etc, my.local
+dn: cn=topology,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: topology
+
+# Domain Level, ipa, etc, my.local
+dn: cn=Domain Level,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+objectClass: ipaDomainLevelConfig
+objectClass: ipaConfigObject
+cn: Domain Level
+
+# kerberos, my.local
+dn: cn=kerberos,dc=my,dc=local
+objectClass: krbContainer
+objectClass: top
+cn: kerberos
+
+# MY.LOCAL, kerberos, my.local
+dn: cn=MY.LOCAL,cn=kerberos,dc=my,dc=local
+cn: MY.LOCAL
+objectClass: top
+objectClass: krbrealmcontainer
+objectClass: krbticketpolicyaux
+
+# sig/freeipa.my.local, custodia, ipa, etc, my.local
+dn: cn=sig/freeipa.my.local,cn=custodia,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: ipaKeyPolicy
+objectClass: ipaPublicKeyObject
+objectClass: groupOfPrincipals
+objectClass: top
+cn: sig/freeipa.my.local
+
+# enc/freeipa.my.local, custodia, ipa, etc, my.local
+dn: cn=enc/freeipa.my.local,cn=custodia,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: ipaKeyPolicy
+objectClass: ipaPublicKeyObject
+objectClass: groupOfPrincipals
+objectClass: top
+cn: enc/freeipa.my.local
+
+# CAcert, ipa, etc, my.local
+dn: cn=CAcert,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: pkiCA
+objectClass: top
+cn: CAcert
+cACertificate;binary:: MIIEgjCCAuqgAwIBAgIBATANBgkqhkiG9w0BAQsFADAzMREwDwYDVQQ
+ KDAhNWS5MT0NBTDEeMBwGA1UEAwwVQ2VydGlmaWNhdGUgQXV0aG9yaXR5MB4XDTIyMDMyMTE2MDEy
+ NloXDTQyMDMyMTE2MDEyNlowMzERMA8GA1UECgwITVkuTE9DQUwxHjAcBgNVBAMMFUNlcnRpZmljY
+ XRlIEF1dGhvcml0eTCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBAM6g1badk/vJH2q5nL
+ dceXLW9uRFvDFE1v986GVatieMtTGdqxhtG2gyCzQ3ru5l8j4+Hkx079fA/54cODDgIvaPXSwqoIa
+ 74N+UvRbvxWAK+2pE0odqTlOAsdKPv1sHEeA1uQTefSOpF2YDvzBNPgbKIlVoB4gmssXxk89KYXe4
+ Nh4zoO5alW+HVZET3DZ8P8mG37KyAvYYxP39qKkO4NMcMUAjx8N/snshjL6M5uZKBWbqTEh5HOlaQ
+ 7Z7zuDv0u69p2mqHWkidpvwlx31zupJAkgPq90bQLB+MM/R4KA7eUAmhokZTBLvDJ+f2JCbgVgQOL
+ /VKjTjIXKQDmMNJW/t0i45gm+LujJuKzrbA9X5tv0zZXM2SGP79/pAmZx3OVTonpuySKiznSkApVe
+ q3orSIiK41e4DnS30nJU32UN3/C/t8QtzieeWEVWBujPa0iOT0WxI/JcI2Orflne3hM8rs9FJr7kY
+ miz/T6q3sgwy/ZCAAS7I3n5ZtMknNWhL/QIDAQABo4GgMIGdMB8GA1UdIwQYMBaAFDGufk81B2S1f
+ wNUUHAQLR0L4hCVMA8GA1UdEwEB/wQFMAMBAf8wDgYDVR0PAQH/BAQDAgHGMB0GA1UdDgQWBBQxrn
+ 5PNQdktX8DVFBwEC0dC+IQlTA6BggrBgEFBQcBAQQuMCwwKgYIKwYBBQUHMAGGHmh0dHA6Ly9pcGE
+ tY2EubXkubG9jYWwvY2Evb2NzcDANBgkqhkiG9w0BAQsFAAOCAYEAUc5qhA+l1X+5Fg3jTfJoK1K+
+ G5psON4sOBXOKH1yzRPGTcLxvsxWH5TcxlSAJOLj42PPm90w0a1v6sIBGozPA8XfLVzWWX1/TGAj/
+ D+kw9etFKVQVQSs/yzh8t8hQ1Uz0f2joEYm6vQt3wZ/BezXiR75/gWMe4s8lhSfhJKXtB/u345pDZ
+ RHuF2FunLdKfi7IPsmgljNJbZoRxCKgfvYtEMCqbzBHIeRmg07KvL/0Ir3m7RE+DQO/nfwO5PUsI2
+ Y11/nK/8A6yPQqXhsluuztmqxd8XgOGPlxqTx6sC+6VcFAYMJPgJd6UNhIGCLrdYofcTXRAi0lM9H
+ 1HD/V4NVL/A1pyGordWpOaYIA+BYrcLTInOfMUclOUlGJttDUXwXPE2J5ha8bt1wHUsvdG1YojtZx
+ uItj/QMxzl6Z27/3KVINGAk5bZtSIMMrOzUnPbSo/q77MKwXhHg1t3NqP6hxIUs7bOBDze03xwi6t
+ /T6bZyicidONtXvzvH8EHBz/Jz
+
+# MY.LOCAL IPA CA, certificates, ipa, etc, my.local
+dn: cn=MY.LOCAL IPA CA,cn=certificates,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: ipaCertificate
+objectClass: pkiCA
+objectClass: ipaKeyPolicy
+objectClass: top
+cn: MY.LOCAL IPA CA
+ipaCertSubject: CN=Certificate Authority,O=MY.LOCAL
+ipaCertIssuerSerial: CN=Certificate Authority,O=MY.LOCAL;1
+ipaPublicKey:: MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAzqDVtp2T+8kfarmct1x
+ 5ctb25EW8MUTW/3zoZVq2J4y1MZ2rGG0baDILNDeu7mXyPj4eTHTv18D/nhw4MOAi9o9dLCqghrvg
+ 35S9Fu/FYAr7akTSh2pOU4Cx0o+/WwcR4DW5BN59I6kXZgO/ME0+BsoiVWgHiCayxfGTz0phd7g2H
+ jOg7lqVb4dVkRPcNnw/yYbfsrIC9hjE/f2oqQ7g0xwxQCPHw3+yeyGMvozm5koFZupMSHkc6VpDtn
+ vO4O/S7r2naaodaSJ2m/CXHfXO6kkCSA+r3RtAsH4wz9HgoDt5QCaGiRlMEu8Mn5/YkJuBWBA4v9U
+ qNOMhcpAOYw0lb+3SLjmCb4u6Mm4rOtsD1fm2/TNlczZIY/v3+kCZnHc5VOiem7JIqLOdKQClV6re
+ itIiIrjV7gOdLfSclTfZQ3f8L+3xC3OJ55YRVYG6M9rSI5PRbEj8lwjY6t+Wd7eEzyuz0UmvuRiaL
+ P9PqreyDDL9kIABLsjeflm0ySc1aEv9AgMBAAE=
+cACertificate;binary:: MIIEgjCCAuqgAwIBAgIBATANBgkqhkiG9w0BAQsFADAzMREwDwYDVQQ
+ KDAhNWS5MT0NBTDEeMBwGA1UEAwwVQ2VydGlmaWNhdGUgQXV0aG9yaXR5MB4XDTIyMDMyMTE2MDEy
+ NloXDTQyMDMyMTE2MDEyNlowMzERMA8GA1UECgwITVkuTE9DQUwxHjAcBgNVBAMMFUNlcnRpZmljY
+ XRlIEF1dGhvcml0eTCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBAM6g1badk/vJH2q5nL
+ dceXLW9uRFvDFE1v986GVatieMtTGdqxhtG2gyCzQ3ru5l8j4+Hkx079fA/54cODDgIvaPXSwqoIa
+ 74N+UvRbvxWAK+2pE0odqTlOAsdKPv1sHEeA1uQTefSOpF2YDvzBNPgbKIlVoB4gmssXxk89KYXe4
+ Nh4zoO5alW+HVZET3DZ8P8mG37KyAvYYxP39qKkO4NMcMUAjx8N/snshjL6M5uZKBWbqTEh5HOlaQ
+ 7Z7zuDv0u69p2mqHWkidpvwlx31zupJAkgPq90bQLB+MM/R4KA7eUAmhokZTBLvDJ+f2JCbgVgQOL
+ /VKjTjIXKQDmMNJW/t0i45gm+LujJuKzrbA9X5tv0zZXM2SGP79/pAmZx3OVTonpuySKiznSkApVe
+ q3orSIiK41e4DnS30nJU32UN3/C/t8QtzieeWEVWBujPa0iOT0WxI/JcI2Orflne3hM8rs9FJr7kY
+ miz/T6q3sgwy/ZCAAS7I3n5ZtMknNWhL/QIDAQABo4GgMIGdMB8GA1UdIwQYMBaAFDGufk81B2S1f
+ wNUUHAQLR0L4hCVMA8GA1UdEwEB/wQFMAMBAf8wDgYDVR0PAQH/BAQDAgHGMB0GA1UdDgQWBBQxrn
+ 5PNQdktX8DVFBwEC0dC+IQlTA6BggrBgEFBQcBAQQuMCwwKgYIKwYBBQUHMAGGHmh0dHA6Ly9pcGE
+ tY2EubXkubG9jYWwvY2Evb2NzcDANBgkqhkiG9w0BAQsFAAOCAYEAUc5qhA+l1X+5Fg3jTfJoK1K+
+ G5psON4sOBXOKH1yzRPGTcLxvsxWH5TcxlSAJOLj42PPm90w0a1v6sIBGozPA8XfLVzWWX1/TGAj/
+ D+kw9etFKVQVQSs/yzh8t8hQ1Uz0f2joEYm6vQt3wZ/BezXiR75/gWMe4s8lhSfhJKXtB/u345pDZ
+ RHuF2FunLdKfi7IPsmgljNJbZoRxCKgfvYtEMCqbzBHIeRmg07KvL/0Ir3m7RE+DQO/nfwO5PUsI2
+ Y11/nK/8A6yPQqXhsluuztmqxd8XgOGPlxqTx6sC+6VcFAYMJPgJd6UNhIGCLrdYofcTXRAi0lM9H
+ 1HD/V4NVL/A1pyGordWpOaYIA+BYrcLTInOfMUclOUlGJttDUXwXPE2J5ha8bt1wHUsvdG1YojtZx
+ uItj/QMxzl6Z27/3KVINGAk5bZtSIMMrOzUnPbSo/q77MKwXhHg1t3NqP6hxIUs7bOBDze03xwi6t
+ /T6bZyicidONtXvzvH8EHBz/Jz
+ipaKeyTrust: trusted
+ipaKeyExtUsage: 1.3.6.1.5.5.7.3.2
+ipaKeyExtUsage: 1.3.6.1.5.5.7.3.1
+ipaKeyExtUsage: 1.3.6.1.5.5.7.3.3
+ipaKeyExtUsage: 1.3.6.1.5.5.7.3.4
+ipaConfigString: ipaCa
+ipaConfigString: compatCA
+
+# sig/freeipa.my.local, dogtag, custodia, ipa, etc, my.local
+dn: cn=sig/freeipa.my.local,cn=dogtag,cn=custodia,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: ipaKeyPolicy
+objectClass: ipaPublicKeyObject
+objectClass: groupOfPrincipals
+objectClass: top
+cn: sig/freeipa.my.local
+
+# enc/freeipa.my.local, dogtag, custodia, ipa, etc, my.local
+dn: cn=enc/freeipa.my.local,cn=dogtag,cn=custodia,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: ipaKeyPolicy
+objectClass: ipaPublicKeyObject
+objectClass: groupOfPrincipals
+objectClass: top
+cn: enc/freeipa.my.local
+
+# anonymous-limits, etc, my.local
+dn: cn=anonymous-limits,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: anonymous-limits
+
+# Kerberos Service Password Policy, MY.LOCAL, kerberos, my.local
+dn: cn=Kerberos Service Password Policy,cn=MY.LOCAL,cn=kerberos,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: Kerberos Service Password Policy
+
+# cosTemplates, computers, accounts, my.local
+dn: cn=cosTemplates,cn=computers,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: cosTemplates
+
+# cosTemplates, services, accounts, my.local
+dn: cn=cosTemplates,cn=services,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: cosTemplates
+
+# cosTemplates, MY.LOCAL, kerberos, my.local
+dn: cn=cosTemplates,cn=MY.LOCAL,cn=kerberos,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: cosTemplates
+
+# Default Password Policy, cosTemplates, MY.LOCAL, kerberos, my.local
+dn: cn=Default Password Policy,cn=cosTemplates,cn=MY.LOCAL,cn=kerberos,dc=my,d
+ c=local
+objectClass: top
+objectClass: cosTemplate
+objectClass: extensibleObject
+objectClass: krbContainer
+cn: Default Password Policy
+
+# cosTemplates, sysaccounts, etc, my.local
+dn: cn=cosTemplates,cn=sysaccounts,cn=etc,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: cosTemplates
+
+# profile, my.local
+dn: ou=profile,dc=my,dc=local
+objectClass: top
+objectClass: organizationalUnit
+ou: profiles
+ou: profile
+
+# default, profile, my.local
+dn: cn=default,ou=profile,dc=my,dc=local
+objectClass: top
+objectClass: DUAConfigProfile
+defaultServerList: freeipa.my.local
+defaultSearchBase: dc=my,dc=local
+authenticationMethod: none
+searchTimeLimit: 15
+cn: default
+serviceSearchDescriptor: passwd:cn=users,cn=accounts,dc=my,dc=local
+serviceSearchDescriptor: group:cn=groups,cn=compat,dc=my,dc=local
+bindTimeLimit: 5
+objectclassMap: shadow:shadowAccount=posixAccount
+followReferrals: TRUE
+
+# provisioning, my.local
+dn: cn=provisioning,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: provisioning
+
+# accounts, provisioning, my.local
+dn: cn=accounts,cn=provisioning,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: accounts
+
+# staged users, accounts, provisioning, my.local
+dn: cn=staged users,cn=accounts,cn=provisioning,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: staged users
+
+# deleted users, accounts, provisioning, my.local
+dn: cn=deleted users,cn=accounts,cn=provisioning,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: deleted users
+
+# retrieve certificate, virtual operations, etc, my.local
+dn: cn=retrieve certificate,cn=virtual operations,cn=etc,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: retrieve certificate
+
+# request certificate, virtual operations, etc, my.local
+dn: cn=request certificate,cn=virtual operations,cn=etc,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: request certificate
+
+# request certificate different host, virtual operations, etc, my.local
+dn: cn=request certificate different host,cn=virtual operations,cn=etc,dc=my,d
+ c=local
+objectClass: top
+objectClass: nsContainer
+cn: request certificate different host
+
+# certificate status, virtual operations, etc, my.local
+dn: cn=certificate status,cn=virtual operations,cn=etc,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: certificate status
+
+# revoke certificate, virtual operations, etc, my.local
+dn: cn=revoke certificate,cn=virtual operations,cn=etc,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: revoke certificate
+
+# certificate remove hold, virtual operations, etc, my.local
+dn: cn=certificate remove hold,cn=virtual operations,cn=etc,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: certificate remove hold
+
+# request certificate ignore caacl, virtual operations, etc, my.local
+dn: cn=request certificate ignore caacl,cn=virtual operations,cn=etc,dc=my,dc=
+ local
+objectClass: top
+objectClass: nsContainer
+cn: request certificate ignore caacl
+
+# otp, my.local
+dn: cn=otp,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: otp
+
+# radiusproxy, my.local
+dn: cn=radiusproxy,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: radiusproxy
+
+# Realm Domains, ipa, etc, my.local
+dn: cn=Realm Domains,cn=ipa,cn=etc,dc=my,dc=local
+objectClass: domainRelatedObject
+objectClass: nsContainer
+objectClass: top
+cn: Realm Domains
+
+# trust admins, groups, accounts, my.local
+dn: cn=trust admins,cn=groups,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: groupofnames
+objectClass: ipausergroup
+objectClass: nestedgroup
+objectClass: ipaobject
+cn: trust admins
+description: Trusts administrators group
+ipaUniqueID: 65cb3eaa-a930-11ec-a33a-0800277adbec
+
+# trusts, my.local
+dn: cn=trusts,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: trusts
+
+# views, accounts, my.local
+dn: cn=views,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: views
+
+# certmap, my.local
+dn: cn=certmap,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+objectClass: ipaCertMapConfigObject
+cn: certmap
+
+# certmaprules, certmap, my.local
+dn: cn=certmaprules,cn=certmap,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: certmaprules
+
+# subids, accounts, my.local
+dn: cn=subids,cn=accounts,dc=my,dc=local
+objectClass: top
+objectClass: nsContainer
+cn: subids
+
+# ad, trusts, my.local
+dn: cn=ad,cn=trusts,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: cn
+cn: ad
+
+# ad, etc, my.local
+dn: cn=ad,cn=etc,dc=my,dc=local
+objectClass: nsContainer
+objectClass: top
+cn: cn
+cn: ad
+
+# my.local, ad, etc, my.local
+dn: cn=my.local,cn=ad,cn=etc,dc=my,dc=local
+objectClass: ipaNTDomainAttrs
+objectClass: nsContainer
+objectClass: top
+cn: my.local
+
+# Default SMB Group, groups, accounts, my.local
+dn: cn=Default SMB Group,cn=groups,cn=accounts,dc=my,dc=local
+cn: Default SMB Group
+description: Fallback group for primary group RID, do not add users to this gr
+ oup
+objectClass: top
+objectClass: ipaobject
+objectClass: posixgroup
+objectClass: ipantgroupattrs
+ipaUniqueID: b8fd5dc4-a930-11ec-9bd2-0800277adbec
+gidNumber: 477600001
+ipaNTSecurityIdentifier: S-1-5-21-2904903570-3206073076-3256804436-1001
+
+# sa-rancher, users, accounts, my.local
+dn: uid=sa-rancher,cn=users,cn=accounts,dc=my,dc=local
+givenName: Rancher
+sn: Service Account
+uid: sa-rancher
+cn: Rancher Service Account
+displayName: Rancher Service Account
+initials: RS
+gecos: Rancher Service Account
+objectClass: top
+objectClass: person
+objectClass: organizationalperson
+objectClass: inetorgperson
+objectClass: inetuser
+objectClass: posixaccount
+objectClass: krbprincipalaux
+objectClass: krbticketpolicyaux
+objectClass: ipaobject
+objectClass: ipasshuser
+objectClass: ipaSshGroupOfPubKeys
+objectClass: mepOriginEntry
+objectClass: ipantuserattrs
+loginShell: /bin/sh
+homeDirectory: /home/sa-rancher
+uidNumber: 477600003
+gidNumber: 477600003
+ipaNTSecurityIdentifier: S-1-5-21-2904903570-3206073076-3256804436-1003
+
+# sa-rancher, groups, accounts, my.local
+dn: cn=sa-rancher,cn=groups,cn=accounts,dc=my,dc=local
+objectClass: posixgroup
+objectClass: ipaobject
+objectClass: mepManagedEntry
+objectClass: top
+cn: sa-rancher
+gidNumber: 477600003
+description: User private group for sa-rancher
+mepManagedBy: uid=sa-rancher,cn=users,cn=accounts,dc=my,dc=local
+ipaUniqueID: ff03eb5a-a942-11ec-9b71-0800277adbec
+
+# rancher, groups, accounts, my.local
+dn: cn=rancher,cn=groups,cn=accounts,dc=my,dc=local
+cn: rancher
+objectClass: top
+objectClass: groupofnames
+objectClass: nestedgroup
+objectClass: ipausergroup
+objectClass: ipaobject
+objectClass: posixgroup
+objectClass: ipantgroupattrs
+ipaUniqueID: 0c64a334-a943-11ec-8fd3-0800277adbec
+gidNumber: 477600004
+ipaNTSecurityIdentifier: S-1-5-21-2904903570-3206073076-3256804436-1004
+
+# rancher-admins, groups, accounts, my.local
+dn: cn=rancher-admins,cn=groups,cn=accounts,dc=my,dc=local
+cn: rancher-admins
+objectClass: top
+objectClass: groupofnames
+objectClass: nestedgroup
+objectClass: ipausergroup
+objectClass: ipaobject
+objectClass: posixgroup
+objectClass: ipantgroupattrs
+ipaUniqueID: 2237d1dc-aacd-11ec-9ab3-0800277adbec
+gidNumber: 477600005
+ipaNTSecurityIdentifier: S-1-5-21-2904903570-3206073076-3256804436-1005
+
+# rancher-users, groups, accounts, my.local
+dn: cn=rancher-users,cn=groups,cn=accounts,dc=my,dc=local
+cn: rancher-users
+objectClass: top
+objectClass: groupofnames
+objectClass: nestedgroup
+objectClass: ipausergroup
+objectClass: ipaobject
+objectClass: posixgroup
+objectClass: ipantgroupattrs
+ipaUniqueID: 2803367e-aacd-11ec-88bb-0800277adbec
+gidNumber: 477600006
+ipaNTSecurityIdentifier: S-1-5-21-2904903570-3206073076-3256804436-1006
+
+# rancher-user, users, accounts, my.local
+dn: uid=rancher-user,cn=users,cn=accounts,dc=my,dc=local
+givenName: User
+sn: Rancher
+uid: rancher-user
+cn: User Rancher
+displayName: User Rancher
+initials: UR
+gecos: User Rancher
+gidNumber: 477600006
+objectClass: top
+objectClass: person
+objectClass: organizationalperson
+objectClass: inetorgperson
+objectClass: inetuser
+objectClass: posixaccount
+objectClass: krbprincipalaux
+objectClass: krbticketpolicyaux
+objectClass: ipaobject
+objectClass: ipasshuser
+objectClass: ipaSshGroupOfPubKeys
+objectClass: mepOriginEntry
+objectClass: ipantuserattrs
+loginShell: /bin/sh
+homeDirectory: /home/rancher-user
+uidNumber: 477600007
+ipaNTSecurityIdentifier: S-1-5-21-2904903570-3206073076-3256804436-1007
+
+# rancher-user, groups, accounts, my.local
+dn: cn=rancher-user,cn=groups,cn=accounts,dc=my,dc=local
+objectClass: posixgroup
+objectClass: ipaobject
+objectClass: mepManagedEntry
+objectClass: top
+cn: rancher-user
+gidNumber: 477600007
+description: User private group for rancher-user
+mepManagedBy: uid=rancher-user,cn=users,cn=accounts,dc=my,dc=local
+ipaUniqueID: 765690bc-aae8-11ec-8321-0800277adbec
+
+# rancher-admin, users, accounts, my.local
+dn: uid=rancher-admin,cn=users,cn=accounts,dc=my,dc=local
+givenName: Admin
+sn: Rancher
+uid: rancher-admin
+cn: Admin Rancher
+displayName: Admin Rancher
+initials: AR
+gecos: Admin Rancher
+gidNumber: 477600005
+objectClass: top
+objectClass: person
+objectClass: organizationalperson
+objectClass: inetorgperson
+objectClass: inetuser
+objectClass: posixaccount
+objectClass: krbprincipalaux
+objectClass: krbticketpolicyaux
+objectClass: ipaobject
+objectClass: ipasshuser
+objectClass: ipaSshGroupOfPubKeys
+objectClass: mepOriginEntry
+objectClass: ipantuserattrs
+loginShell: /bin/sh
+homeDirectory: /home/rancher-admin
+uidNumber: 477600008
+ipaNTSecurityIdentifier: S-1-5-21-2904903570-3206073076-3256804436-1008
+
+# rancher-admin, groups, accounts, my.local
+dn: cn=rancher-admin,cn=groups,cn=accounts,dc=my,dc=local
+objectClass: posixgroup
+objectClass: ipaobject
+objectClass: mepManagedEntry
+objectClass: top
+cn: rancher-admin
+gidNumber: 477600008
+description: User private group for rancher-admin
+mepManagedBy: uid=rancher-admin,cn=users,cn=accounts,dc=my,dc=local
+ipaUniqueID: 886f8c18-aae8-11ec-bb4e-0800277adbec
+
+# search result
+search: 2
+result: 0 Success
+
+# numResponses: 128
+# numEntries: 127
