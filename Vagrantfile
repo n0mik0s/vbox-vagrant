@@ -44,14 +44,21 @@ cluster = {
     :cpus => 3,
     :mem => 5120,
     :distro => "generic/fedora35",
-    :bridgeadapter1 => "wlp0s20f3"
+    :bridgeadapter1 => "wlp2s0"
   },
   "vault" => {
     :ip => "192.168.172.85",
     :cpus => 2,
     :mem => 4096,
     :distro => "generic/ubuntu2004",
-    :bridgeadapter1 => "wlp0s20f3"
+    :bridgeadapter1 => "wlp2s0"
+  },
+  "gitlab" => {
+    :ip => "192.168.172.87",
+    :cpus => 2,
+    :mem => 4096,
+    :distro => "generic/ubuntu2004",
+    :bridgeadapter1 => "wlp2s0"
   }
 }
 
