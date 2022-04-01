@@ -9,54 +9,40 @@ cluster = {
     :cpus => 2,
     :mem => 2048,
     :distro => "generic/fedora35",
-    :bridgeadapter1 => "wlp0s20f3"
+    :bridgeadapter1 => "wlp2s0"
   },
   "rancher" => {
     :ip => "192.168.172.81",
     :cpus => 2,
     :mem => 3072,
     :distro => "generic/ubuntu2004",
-    :bridgeadapter1 => "wlp0s20f3"
-  },
-  "master" => {
-    :ip => "192.168.172.82",
-    :cpus => 3,
-    :mem => 5120,
-    :distro => "generic/fedora35",
-    :bridgeadapter1 => "wlp0s20f3"
-  },
-  "worker1" => {
-    :ip => "192.168.172.83",
-    :cpus => 3,
-    :mem => 5120,
-    :distro => "generic/fedora35",
-    :bridgeadapter1 => "wlp0s20f3"
-  },
-  "worker2" => {
-    :ip => "192.168.172.84",
-    :cpus => 3,
-    :mem => 5120,
-    :distro => "generic/fedora35",
-    :bridgeadapter1 => "wlp0s20f3"
-  },
-  "worker3" => {
-    :ip => "192.168.172.86",
-    :cpus => 3,
-    :mem => 5120,
-    :distro => "generic/fedora35",
     :bridgeadapter1 => "wlp2s0"
   },
-  "vault" => {
-    :ip => "192.168.172.85",
-    :cpus => 2,
-    :mem => 4096,
-    :distro => "generic/ubuntu2004",
+  "k8s1" => {
+    :ip => "192.168.172.82",
+    :cpus => 3,
+    :mem => 7168,
+    :distro => "generic/fedora35",
     :bridgeadapter1 => "wlp0s20f3"
   },
-  "gitlab" => {
-    :ip => "192.168.172.87",
+  "k8s2" => {
+    :ip => "192.168.172.83",
+    :cpus => 3,
+    :mem => 7168,
+    :distro => "generic/fedora35",
+    :bridgeadapter1 => "wlp0s20f3"
+  },
+  "k8s3" => {
+    :ip => "192.168.172.84",
+    :cpus => 3,
+    :mem => 7168,
+    :distro => "generic/fedora35",
+    :bridgeadapter1 => "wlp0s20f3"
+  },
+  "else" => {
+    :ip => "192.168.172.85",
     :cpus => 2,
-    :mem => 4096,
+    :mem => 6144,
     :distro => "generic/ubuntu2004",
     :bridgeadapter1 => "wlp2s0"
   }
@@ -83,10 +69,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         override.vm.network :public_network, ip: "#{info[:ip]}", bridge: info[:bridgeadapter1], hostname: true
         override.vm.hostname = "#{hostname}.my.local"
-
-        if hostname == "freeipa"
-          cfg.vm.synced_folder "playbooks/", "/home/vagrant/ansible"
-        end
 
       end
 

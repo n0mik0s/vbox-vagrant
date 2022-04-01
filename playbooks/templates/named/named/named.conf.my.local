@@ -3,7 +3,7 @@ zone "my.local" {
     file "/etc/named/zones/db.my.local";
 };
 
-zone "207.168.192.in-addr.arpa" {
+zone "172.168.192.in-addr.arpa" {
     type master;
-    file "/etc/named/zones/db.207.168.192";
+    file "/etc/named/zones/db.172.168.192";
 };

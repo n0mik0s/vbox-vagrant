@@ -1,6 +1,6 @@
 $TTL 86400
 @     N     SOA   freeipa.my.local. admin.my.local. (
-                              3           ; Serial
+                              4           ; Serial
                               604800      ; Refresh
                               86400       ; Retry
                               2419200     ; Expire
@@ -12,3 +12,7 @@ $TTL 86400
 ; PTR Records
 80    IN	PTR	freeipa.my.local
 81	IN    PTR	rancher.my.local
+82	IN    PTR	k8s1.my.local
+83	IN    PTR	k8s2.my.local
+84	IN    PTR	k8s3.my.local
+85	IN    PTR	else.my.local

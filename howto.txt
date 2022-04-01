@@ -1,27 +1,42 @@
 ### FEDORA
 systemctl stop firewalld && systemctl disable firewalld
 
-yum install -y freeipa-client htop mc openssl
+yum update -y && yum install -y freeipa-client htop mc openssl
 
 vi /etc/NetworkManager/NetworkManager.conf
 [main]
-#plugins=keyfile,ifcfg-rh
+plugins=keyfile,ifcfg-rh
 dns=none
 
 vi /etc/selinux/config
+SELINUX=disabled
 
 ### UBUNTU
 systemctl stop ufw.service && systemctl disable ufw.service 
 
-apt update && apt install -y freeipa-client resolvconf
+apt update -y && apt install -y freeipa-client resolvconf policycoreutils selinux-utils selinux-basics
 
 vi /etc/resolvconf/resolv.conf.d/head
-nameserver 192.168.207.80
+nameserver 192.168.172.80
 search my.local
 
 systemctl restart resolvconf.service && systemctl restart systemd-resolved.service
 
+### FREEIPA
+https://computingforgeeks.com/install-freeipa-server-centos-7/
+yum update -y && yum install -y bind bind-utils htop mc openssl ipa-server ipa-server-dns bind-dyndb-ldap
+
+systemctl enable named && systemctl start named
+
+vi /etc/sysctl.conf
+net.ipv6.conf.all.disable_ipv6 = 0
+sysctl -p
+
 ### RANCHER
+https://docs.docker.com/engine/install/fedora/
+
+systemctl start docker && systemctl enable docker
+
 mkdir certs
 cd certs/
 
@@ -31,7 +46,7 @@ openssl genrsa -out rancher.key 2048
 openssl req -new -key rancher.key -out rancher.csr
 openssl x509 -req -in rancher.csr -CA myCA.pem -CAkey myCA.key -CAcreateserial -out rancher.crt -days 825 -sha256
 
-docker run -d --restart=unless-stopped   -p 8080:80 -p 8443:443 -v /opt/rancher1:/var/lib/rancher -v /home/vagrant/certs/myCA.pem:/etc/rancher/ssl/cacerts.pem -v /home/vagrant/certs/rancher.crt:/etc/rancher/ssl/cert.pem -v /home/vagrant/certs/rancher.key:/etc/rancher/ssl/key.pem --privileged rancher/rancher:latest
+docker run -d --restart=unless-stopped   -p 80:80 -p 443:443 -v /home/vagrant/certs:/container/certs -v /opt/rancher:/var/lib/rancher -v /home/vagrant/certs/myCA.pem:/etc/rancher/ssl/cacerts.pem -v /home/vagrant/certs/rancher.crt:/etc/rancher/ssl/cert.pem -v /home/vagrant/certs/rancher.key:/etc/rancher/ssl/key.pem -e SSL_CERT_DIR="/container/certs" --privileged rancher/rancher:latest
 
 ### IPA CLIENT
 ipa-client-install --force-join --hostname=`hostname -f` \

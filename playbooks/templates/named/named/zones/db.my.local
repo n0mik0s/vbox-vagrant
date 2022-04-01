@@ -11,7 +11,11 @@ $TTL 86400
 	IN	NS	freeipa.my.local.
 
 ; name servers - A records
-freeipa.my.local.	IN	A	192.168.207.80
+freeipa.my.local.	IN	A	192.168.172.80
 
-; 192.168.207/24 - A records
-rancher.my.local.	IN	A	192.168.207.81
+; 192.168.172/24 - A records
+rancher.my.local.	IN	A	192.168.172.81
+k8s1.my.local.		IN	A	192.168.172.82
+k8s2.my.local.		IN	A	192.168.172.83
+k8s3.my.local.		IN	A	192.168.172.84
+else.my.local.		IN	A	192.168.172.85
