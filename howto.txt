@@ -1,0 +1,155 @@
+### FEDORA
+systemctl stop firewalld && systemctl disable firewalld
+
+yum install -y freeipa-client htop mc openssl
+
+vi /etc/NetworkManager/NetworkManager.conf
+[main]
+#plugins=keyfile,ifcfg-rh
+dns=none
+
+vi /etc/selinux/config
+
+### UBUNTU
+systemctl stop ufw.service && systemctl disable ufw.service 
+
+apt update && apt install -y freeipa-client resolvconf
+
+vi /etc/resolvconf/resolv.conf.d/head
+nameserver 192.168.207.80
+search my.local
+
+systemctl restart resolvconf.service && systemctl restart systemd-resolved.service
+
+### RANCHER
+mkdir certs
+cd certs/
+
+openssl genrsa  -out myCA.key 2048
+openssl req -x509 -new -nodes -key myCA.key -sha256 -days 1825 -out myCA.pem
+openssl genrsa -out rancher.key 2048
+openssl req -new -key rancher.key -out rancher.csr
+openssl x509 -req -in rancher.csr -CA myCA.pem -CAkey myCA.key -CAcreateserial -out rancher.crt -days 825 -sha256
+
+docker run -d --restart=unless-stopped   -p 8080:80 -p 8443:443 -v /opt/rancher1:/var/lib/rancher -v /home/vagrant/certs/myCA.pem:/etc/rancher/ssl/cacerts.pem -v /home/vagrant/certs/rancher.crt:/etc/rancher/ssl/cert.pem -v /home/vagrant/certs/rancher.key:/etc/rancher/ssl/key.pem --privileged rancher/rancher:latest
+
+### IPA CLIENT
+ipa-client-install --force-join --hostname=`hostname -f` \
+--mkhomedir \
+--server=freeipa.my.local \
+--domain my.local \
+--realm MY.LOCAL
+
+Enter NTP source server addresses separated by comma, or press Enter to skip: 0.ua.pool.ntp.org,1.ua.pool.ntp.org,2.ua.pool.ntp.org,3.ua.pool.ntp.org
+
+### VAULT
+https://learn.hashicorp.com/tutorials/vault/getting-started-install
+https://www.vaultproject.io/docs/auth/kubernetes
+https://github.com/hashicorp/vault-plugin-auth-kubernetes/issues/49
+https://learn.hashicorp.com/tutorials/vault/kubernetes-external-vault?in=vault/kubernetes
+
+https://learn.hashicorp.com/tutorials/vault/getting-started-install?in=vault/getting-started
+
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt-get update && sudo apt-get install vault
+ll /opt/vault/tls
+systemctl status vault
+vi /lib/systemd/system/vault.service
+vi /etc/vault.d/vault.hcl
+systemctl start vault
+systemctl status vault
+export VAULT_ADDR='https://vault.my.local:8200'
+vault operator init -tls-skip-verify
+vault operator unseal -tls-skip-verify
+vault login -tls-skip-verify
+
++++
+https://www.burgundywall.com/post/hashicorp-vault-and-freeipa
+
+# staff.hcl
+
+path "secret/staff" {
+  capabilities = ["read"]
+}
+# ops.hcl
+
+path "secret/*" {
+  capabilities = ["create", "read", "update", "delete", "list"]
+}
+
++++
+
+url="ldaps://freeipa.my.local" \
+userdn="cn=users,cn=accounts,dc=my,dc=local" \
+userattr="uid" \
+groupdn="cn=groups,cn=accounts,dc=my,dc=local" \
+groupattr="cn" \
+binddn="uid=sa-vault,cn=users,cn=accounts,dc=my,dc=local" \
+bindpass='8591430d-2007-ca8c-886b-ef1ad5046e1b' \
+
++++
+
+root@vault:/home/vagrant# vault login -tls-skip-verify -method=ldap username=vault-user
+Password (will be hidden): 
+Success! You are now authenticated. The token information displayed below
+is already stored in the token helper. You do NOT need to run "vault login"
+again. Future Vault requests will automatically use this token.
+
+Key                    Value
+---                    -----
+token                  hvs.CAESIMCrZ9rD7Ma9Xn85PoDT5uiqURq0mLa4defKyqwMeYadGh4KHGh2cy5tYkZia21YUFdwUzhOSUtCMzk5SGtTZjE
+token_accessor         25fuxWWgRUIRibvfyJGR46hm
+token_duration         768h
+token_renewable        true
+token_policies         ["default" "staff"]
+identity_policies      []
+policies               ["default" "staff"]
+token_meta_username    vault-user
+root@vault:/home/vagrant# vault login -tls-skip-verify -method=ldap username=vault-admin
+Password (will be hidden): 
+Success! You are now authenticated. The token information displayed below
+is already stored in the token helper. You do NOT need to run "vault login"
+again. Future Vault requests will automatically use this token.
+
+Key                    Value
+---                    -----
+token                  hvs.CAESIEIxHigTXXo2LXdFZ-iNTFOwLnY4cXZcbFQPq1a0Kx9iGh4KHGh2cy5nVDFScUpJR0pZMFkybnk0Zm9GazFBNlk
+token_accessor         9bGCbmJ6sPt6t7zrzhC946a7
+token_duration         768h
+token_renewable        true
+token_policies         ["default" "ops"]
+identity_policies      []
+policies               ["default" "ops"]
+token_meta_username    vault-admin
+
+kubectl create sa vault-auth
+
+vault write -tls-skip-verify auth/kubernetes/role/vault-auth \
+    bound_service_account_names=vault-tokenreview \
+    bound_service_account_namespaces=default \
+    policies=kube-auth \
+    ttl=48h
+
+
+VAULT_HELM_SECRET_NAME=$(kubectl get secrets --output=json | jq -r '.items[].metadata | select(.name|startswith("vault-tokenreview")).name')
+echo $VAULT_HELM_SECRET_NAME
+
+TOKEN_REVIEW_JWT=$(kubectl get secret $VAULT_HELM_SECRET_NAME --output='go-template={{ .data.token }}' | base64 --decode)
+echo $TOKEN_REVIEW_JWT
+
+KUBE_CA_CERT=$(kubectl config view --raw --minify --flatten --output='jsonpath={.clusters[].cluster.certificate-authority-data}' | base64 --decode)
+echo $KUBE_CA_CERT
+
+KUBE_HOST=$(kubectl config view --raw --minify --flatten --output='jsonpath={.clusters[].cluster.server}')
+echo $KUBE_HOST
+
+vault write -tls-skip-verify auth/kubernetes/login role=vault-auth jwt=$TOKEN_REVIEW_JW
+
+vault policy write -tls-skip-verify kube-auth - <<EOF
+path "secret/internal" {
+  capabilities = ["create", "read", "update", "delete", "list"]
+}
+EOF
+
+curl --request POST --data "{\"jwt\": \"$(cat ./sa.token)\" , \"role\": \"vault-auth\"}" https://vault.my.local/v1/auth/kubernetes/login

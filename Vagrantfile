@@ -51,7 +51,7 @@ cluster = {
     :cpus => 2,
     :mem => 4096,
     :distro => "generic/ubuntu2004",
-    :bridgeadapter1 => "wlp2s0"
+    :bridgeadapter1 => "wlp0s20f3"
   },
   "gitlab" => {
     :ip => "192.168.172.87",
